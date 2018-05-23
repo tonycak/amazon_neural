@@ -1,3 +1,6 @@
 # amazon_neural
 
-files go here
+shp: folder contains relevant study area shapefiles.
+geojson: same files as shp but in geojson format.
+
+ag_stats: currently hosts relevant code snippets used to make postgres/postgis database for agricultural statistics data from Amazonian countries. this information will be used to develop land cover training information.
