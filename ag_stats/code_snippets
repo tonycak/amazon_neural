@@ -3,7 +3,7 @@
 # Import shapefiles to postgres database called "amazon_ag":
 shp2pgsql -I -s 4326 [location]/gadm36_BOL_0.shp bolivia_nation | psql -U postgres -d amazon_ag
 
-# Import csv files into postgres databse:
+# Import csv files into postgres database (note, have to be in the postgres terminal window):
 COPY [postgres table] FROM '[file location]/[file name].csv' WITH DELIMITER AS ','NULL AS 'NULL' CSV HEADER;
 
 # Change field types in postgres database (Postico):
