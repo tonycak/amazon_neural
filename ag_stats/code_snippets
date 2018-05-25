@@ -7,4 +7,46 @@ shp2pgsql -I -s 4326 [location]/gadm36_BOL_0.shp bolivia_nation | psql -U postgr
 COPY [postgres table] FROM '[file location]/[file name].csv' WITH DELIMITER AS ','NULL AS 'NULL' CSV HEADER;
 
 # Change field types in postgres database (Postico):
-ALTER TABLE [table name] ALTER COLUMN [column name] TYPE [data type] USING ([column name]::[data type]);
+ALTER TABLE frenchguiana_nation_animals ALTER COLUMN region_code1 TYPE integer USING (region_code1::integer);
+
+ALTER TABLE frenchguiana_nation_animals ALTER COLUMN region_code2 TYPE integer USING (region_code2::integer);
+
+ALTER TABLE frenchguiana_nation_animals ALTER COLUMN year TYPE integer USING (year::integer);
+
+ALTER TABLE frenchguiana_nation_animals ALTER COLUMN amount TYPE real USING (amount::real);
+
+ALTER TABLE frenchguiana_nation_harvested ALTER COLUMN fao_class_number1 TYPE integer USING (fao_class_number1::integer);
+
+ALTER TABLE frenchguiana_nation_harvested ALTER COLUMN fao_class_number2 TYPE integer USING (fao_class_number2::integer);
+
+ALTER TABLE frenchguiana_nation_harvested ALTER COLUMN region_code1 TYPE integer USING (region_code1::integer);
+
+ALTER TABLE frenchguiana_nation_harvested ALTER COLUMN region_code2 TYPE integer USING (region_code2::integer);
+
+ALTER TABLE frenchguiana_nation_harvested ALTER COLUMN year TYPE integer USING (year::integer);
+
+ALTER TABLE frenchguiana_nation_harvested ALTER COLUMN amount TYPE real USING (amount::real);
+
+ALTER TABLE frenchguiana_nation_produced ALTER COLUMN fao_class_number1 TYPE integer USING (fao_class_number1::integer);
+
+ALTER TABLE frenchguiana_nation_produced ALTER COLUMN fao_class_number2 TYPE integer USING (fao_class_number2::integer);
+
+ALTER TABLE frenchguiana_nation_produced ALTER COLUMN region_code1 TYPE integer USING (region_code1::integer);
+
+ALTER TABLE frenchguiana_nation_produced ALTER COLUMN region_code2 TYPE integer USING (region_code2::integer);
+
+ALTER TABLE frenchguiana_nation_produced ALTER COLUMN year TYPE integer USING (year::integer);
+
+ALTER TABLE frenchguiana_nation_produced ALTER COLUMN amount TYPE real USING (amount::real);
+
+ALTER TABLE frenchguiana_nation_yield ALTER COLUMN fao_class_number1 TYPE integer USING (fao_class_number1::integer);
+
+ALTER TABLE frenchguiana_nation_yield ALTER COLUMN fao_class_number2 TYPE integer USING (fao_class_number2::integer);
+
+ALTER TABLE frenchguiana_nation_yield ALTER COLUMN region_code1 TYPE integer USING (region_code1::integer);
+
+ALTER TABLE frenchguiana_nation_yield ALTER COLUMN region_code2 TYPE integer USING (region_code2::integer);
+
+ALTER TABLE frenchguiana_nation_yield ALTER COLUMN year TYPE integer USING (year::integer);
+
+ALTER TABLE frenchguiana_nation_yield ALTER COLUMN amount TYPE real USING (amount::real);
