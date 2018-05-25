@@ -1,15 +1,76 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-// STUDY LOCATION EXAMPLE
-var altamira = ee.Geometry.Polygon(
+// STUDY LOCATIONS
+var locations = [
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-52.89, -3.00],
+			[-52.89, -3.75],
+			[-52.14, -3.75],
+			[-52.14, -3.00]
+		]]), {name: 'altamira'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-60.35, 0.50],
+			[-60.35, -0.25],
+			[-59.60, -0.25],
+			[-59.60, 0.50]
+		]]), {name: 'caroebe'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-47.85, -1.00],
+			[-47.85, -1.75],
+			[-47.10, -1.75],
+			[-47.10, -1.00]
+		]]), {name: 'igarape-açu'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-65.47, -7.20],
+			[-65.47, -7.95],
+			[-64.72, -7.95],
+			[-64.72, -7.20]
+		]]), {name: 'lábrea'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-56.13, -12.98],
+			[-56.13, -13.73],
+			[-55.38, -13.73],
+			[-55.38, -12.98]
+		]]), {name: 'lucas do rio verde'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-62.45, -9.24],
+			[-62.45, -9.99],
+			[-61.70, -9.99],
+			[-61.70, -9.24]
+		]]), {name: 'machadinho d-oeste'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-60.43, -2.75],
+			[-60.43, -3.50],
+			[-59.68, -3.50],
+			[-59.68, -2.75]
+		]]), {name: 'manaus'}),
+	ee.Feature(ee.Geometry.Polygon(
+		[[
+			[-73.35, -3.94],
+			[-73.35, -4.69],
+			[-72.60, -4.69],
+			[-72.60, -3.94]
+		]]), {name: 'tamshiyacu'})
+];
+
+
+var amazon_basin = ee.Geometry.Polygon(
 	[[
-		[-52.89, -3.00],
-		[-52.89, -3.75],
-		[-52.14, -3.75],
-		[-52.14, -3.00]
+		[-79.80, 9.30],
+		[-79.80, -23.70],
+		[-46.80, -23.70],
+		[-46.80, 9.30]
 	]]
 );
 
-var region = altamira;
+
+var region = ee.FeatureCollection(locations);
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
