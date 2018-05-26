@@ -419,3 +419,19 @@ Map.addLayer(med, visParams8sr, 'landsat 8 sr median');
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Downloading an image
+// see https://developers.google.com/earth-engine/exporting#to-drive
+Export.image.toDrive({
+	image: med.clip(region), // this is the image name
+	description: 'l8_2_2_diff2_1_region', // this is the description you'll give the file
+	folder:"/gee-analyses", // where to save in google drive
+	scale: 30, // https://developers.google.com/earth-engine/scale
+	region: region,
+	crs: 'EPSG:4326', // this is where you'll set the coordinate system, 4326 is WGS84
+	maxPixels:1e13
+});
+//////////////////////////////////////////////////////////////////////////////////////////
+
