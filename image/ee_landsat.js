@@ -414,12 +414,21 @@ var l8sr_sel = l8sr.select('B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B10', 'NDV
 // Visualization test
 
 // Also worth seeing is this: https://developers.google.com/earth-engine/landsat
-// For generating simple composites; this might be better for TOA analyses.
+
 
 var med = l8sr_sel.median();
 
 var visParams8sr = {bands: ['B4', 'B3', 'B2'],min: [0,0,0],max: [3400, 2800, 1900]};
 Map.addLayer(med, visParams8sr, 'landsat 8 sr median');
+
+
+// For generating simple composites; this might be better for TOA analyses.
+var l8raw = ee.ImageCollection('LANDSAT/LC08/C01/T1_RT')
+	.filterBounds(region)
+	.filterDate(start_date, end_date);
+
+var composite = ee.Algorithms.Landsat.simpleComposite(l8raw);
+Map.addLayer(composite, {bands: ['B4', 'B3', 'B2'], max: 128}, 'TOA composite');
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
