@@ -412,6 +412,10 @@ var l8sr_sel = l8sr.select('B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B10', 'NDV
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Visualization test
+
+// Also worth seeing is this: https://developers.google.com/earth-engine/landsat
+// For generating simple composites; this might be better for TOA analyses.
+
 var med = l8sr_sel.median();
 
 var visParams8sr = {bands: ['B4', 'B3', 'B2'],min: [0,0,0],max: [3400, 2800, 1900]};
