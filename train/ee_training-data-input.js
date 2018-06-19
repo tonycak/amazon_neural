@@ -2,8 +2,16 @@
 // PRODES/INPE deforestation; 2000-2016
 // OSM
 // Imazon deforestation/degradation: 2008-2017
-// Amazonia Socioambiental: 2000-2015
 // ag stats data
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Amazonia Socioambiental: 2000-2015
+// Date: 2000-2015 (5 year increments)
+// https://www.amazoniasocioambiental.org/es/mapas/#descargas; https://www3.socioambiental.org/geo/RAISGMapaOnline/
+// [downloaded but not used here]
+//////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
