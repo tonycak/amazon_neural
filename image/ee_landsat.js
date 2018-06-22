@@ -310,7 +310,7 @@ var maskClouds = function(image) {
 // LANDSAT IMAGE COLLECTION
 
 // TOA collection
-var l5toa = ee.ImageCollection('LANDSAT/LC05/C01/T1_TOA')
+var l5toa = ee.ImageCollection('LANDSAT/LT05/C01/T1_TOA')
 	.filterBounds(region)
 	.filterDate(start_date, end_date)
 	.map(addNDVI5)
@@ -326,7 +326,7 @@ var l5toa = ee.ImageCollection('LANDSAT/LC05/C01/T1_TOA')
 var l5toa_sel = l5toa.select('B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'NDVI', 'EVI', 'SAVI', 'MSAVI', 'NDMI', 'NBR', 'NBR2', 'NDWI');
 
 
-var l7toa = ee.ImageCollection('LANDSAT/LC05/C01/T1_RT_TOA')
+var l7toa = ee.ImageCollection('LANDSAT/LE07/C01/T1_RT_TOA')
 	.filterBounds(region)
 	.filterDate(start_date, end_date)
 	.map(addNDVI5)
