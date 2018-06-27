@@ -395,10 +395,10 @@ Map.addLayer(lc, {min: 0, max: 28, palette: mapbiomasPalette});
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Hansen Global Forest Change v1.4
-// Dates: 2000-2016
-// https://explorer.earthengine.google.com/#detail/UMD%2Fhansen%2Fglobal_forest_change_2016_v1_4
-var hansen = ee.Image('UMD/hansen/global_forest_change_2016_v1_4');
+// Hansen Global Forest Change v1.5
+// Dates: 2000-2017
+// https://code.earthengine.google.com/dataset/UMD/hansen/global_forest_change_2017_v1_5
+var hansen = ee.Image('UMD/hansen/global_forest_change_2017_v1_5');
 var lossImage = hansen.select(['loss']);
 var gainImage = hansen.select(['gain']);
 var treeCover = hansen.select(['treecover2000']);
