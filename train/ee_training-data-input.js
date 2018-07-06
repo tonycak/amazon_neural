@@ -248,9 +248,49 @@ Map.addLayer(med_esa.sldStyle(sld_intervals), {}, 'esa land cover');
 // https://code.earthengine.google.com/dataset/JRC/GHSL/P2016/BUILT_LDSMT_GLOBE_V1
 // https://code.earthengine.google.com/dataset/JRC/GHSL/P2016/SMOD_POP_GLOBE_V1
 
+var ghsl_multi_area = ee.ImageCollection('JRC/GHSL/P2016/BUILT_LDSMT_GLOBE_V1')
+	.filterDate('2000-01-01', '2000-12-31')
+	.select('built');
+
+var sld_intervals_ghsl_multi_area = '<RasterSymbolizer>' +
+ '<ColorMap  type="intervals" extended="false" >' +
+    '<ColorMapEntry color="#0c1d60" quantity="1" label="Water surface"/>' +
+    '<ColorMapEntry color="#000000" quantity="2" label="Land no built-up in any epoch"/>' +
+    '<ColorMapEntry color="#448564" quantity="3" label="Built-up from 2000 to 2014 epochs"/>' +
+    '<ColorMapEntry color="#70daa4" quantity="4" label="Built-up from 1990 to 2000 epochs"/>' +
+    '<ColorMapEntry color="#83ffbf" quantity="5" label="Built-up from 1975 to 1990 epochs"/>' +
+    '<ColorMapEntry color="#ffffff" quantity="6" label="built-up up to 1975 epoch"/>' +
+   '</ColorMap>' +
+'</RasterSymbolizer>';
+
+Map.addLayer(ghsl_multi_area, gl.sldStyle(sld_intervals_ghsl_multi_area), {}, 'ghsl multi area');
 
 
+var ghsl_pres = ee.ImageCollection('JRC/GHSL/P2016/BUILT_LDS_GLOBE_V1')
+	.filterDate('2000-01-01', '2000-12-31')
+	.select('built');
 
+Map.addLayer(tree2000, {
+  min:0, 
+  max: 101, 
+  palette: ['000000', '50C878', '0B6623']
+}, 'built');
+
+
+var ghsl_grid = ee.ImageCollection('JRC/GHSL/P2016/BUILT_LDS_GLOBE_V1')
+	.filterDate('2000-01-01', '2000-12-31')
+	.select('smod_code');
+
+var sld_intervals_ghsl_multi_area = '<RasterSymbolizer>' +
+ '<ColorMap  type="intervals" extended="false" >' +
+    '<ColorMapEntry color="#000000" quantity="0" label="Inhabited areas"/>' +
+    '<ColorMapEntry color="#448564" quantity="1" label="RUR (rural grid cells)"/>' +
+    '<ColorMapEntry color="#70daa4" quantity="2" label="LDC (low density clusters)"/>' +
+    '<ColorMapEntry color="#ffffff" quantity="3" label="HDC (high density clusters)"/>' +
+   '</ColorMap>' +
+'</RasterSymbolizer>';
+
+Map.addLayer(ghsl_multi_area, gl.sldStyle(sld_intervals_ghsl_multi_area), {}, 'globcover')
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // GLCF Landsat tree cover continuous fields
@@ -317,7 +357,7 @@ var sld_intervals = '<RasterSymbolizer>' +
   '</ColorMap>' +
 '</RasterSymbolizer>';
 
-Map.addLayer(gl.sldStyle(sld_intervals), {}, 'globcover');
+Map.addLayer(gl, gl.sldStyle(sld_intervals), {}, 'globcover');
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
