@@ -242,6 +242,17 @@ Map.addLayer(med_esa.sldStyle(sld_intervals), {}, 'esa land cover');
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
+// GHSL: Global Human Settlement Layers, Built-Up Grid
+// Dates: 1975-2014
+// https://code.earthengine.google.com/dataset/JRC/GHSL/P2016/BUILT_LDS_GLOBE_V1
+// https://code.earthengine.google.com/dataset/JRC/GHSL/P2016/BUILT_LDSMT_GLOBE_V1
+// https://code.earthengine.google.com/dataset/JRC/GHSL/P2016/SMOD_POP_GLOBE_V1
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
 // GLCF Landsat tree cover continuous fields
 // Dates: 2000-2010 (three year epochs: 2000, 2005, 2010)
 // https://explorer.earthengine.google.com/#detail/GLCF%2FGLS_TCC
@@ -461,6 +472,7 @@ Map.addLayer(jrc15, {
 // MCD64A1.006 MODIS Burned Area Monthly Global 500m
 // Dates: 2000-2018
 // https://explorer.earthengine.google.com/#detail/MODIS%2F006%2FMCD64A1
+// https://code.earthengine.google.com/dataset/MODIS/006/MCD64A1
 var start_date = '2012-01-01';
 var end_date = '2012-12-31';
 
@@ -477,34 +489,37 @@ Map.addLayer(burned_sum);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // MODIS MCD12Q1.051 Land Cover Type Yearly Global 500m
-// Dates: 2000-2013
+// Dates: 2000-2016
 // https://explorer.earthengine.google.com/#detail/MODIS%2F051%2FMCD12Q1
+// https://code.earthengine.google.com/dataset/MODIS/006/MCD12Q1
 var start_date = '2012-01-01';
 var end_date = '2012-12-31';
 
-var lc_type1 = ee.ImageCollection('MODIS/051/MCD12Q1')
+// this seems to be the new repository:
+var lc_type1 = ee.ImageCollection('MODIS/006/MCD12Q1');
+//var lc_type1 = ee.ImageCollection('MODIS/051/MCD12Q1')
 	.filterDate(start_date, end_date)
-	.select('Land_Cover_Type_1');
+	.select('LC_Type1');
 
 var sld_intervals_lc1 = '<RasterSymbolizer>' +
  '<ColorMap  type="intervals" extended="false" >' +
-    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water"/>' +
-    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen needleleaf forest"/>' +
-    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen broadleaf forest"/>' +
-    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous needleleaf forest"/>' +
-    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous broadleaf forest"/>' +
-    '<ColorMapEntry color="#009900" quantity="5" label="Mixed forest"/>' +
-    '<ColorMapEntry color="#c6b044" quantity="6" label="Closed shrublands"/>' +
-    '<ColorMapEntry color="#dcd159" quantity="7" label="Open shrublands"/>' +
-    '<ColorMapEntry color="#dade48" quantity="8" label="Woody savannas"/>' +
-    '<ColorMapEntry color="#fbff13" quantity="9" label="Savannas"/>' +
-    '<ColorMapEntry color="#b6ff05" quantity="10" label="Grasslands"/>' +
-    '<ColorMapEntry color="#27ff87" quantity="11" label="Permanent wetlands"/>' +
-    '<ColorMapEntry color="#c24f44" quantity="12" label="Croplands"/>' +
-    '<ColorMapEntry color="#a5a5a5" quantity="13" label="Urban and built-up"/>' +
-    '<ColorMapEntry color="#ff6d4c" quantity="14" label="Cropland/natural vegetation mosaic"/>' +
-    '<ColorMapEntry color="#69fff8" quantity="15" label="Snow and ie"/>' +
-    '<ColorMapEntry color="#f9ffa4" quantity="16" label="Barren or sparsely vegetated"/>' +
+    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen Needleleaf Forests: dominated by evergreen conifer trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen Broadleaf Forests: dominated by evergreen broadleaf and palmate trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous Needleleaf Forests: dominated by deciduous needleleaf (larch) trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous Broadleaf Forests: dominated by deciduous broadleaf trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#009900" quantity="5" label="Mixed Forests: dominated by neither deciduous nor evergreen (40-60% of each) tree type (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#c6b044" quantity="6" label="Closed Shrublands: dominated by woody perennials (1-2m height) >60% cover."/>' +
+    '<ColorMapEntry color="#dcd159" quantity="7" label="Open Shrublands: dominated by woody perennials (1-2m height) 10-60% cover."/>' +
+    '<ColorMapEntry color="#dade48" quantity="8" label="Woody Savannas: tree cover 30-60% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#fbff13" quantity="9" label="Savannas: tree cover 10-30% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#b6ff05" quantity="10" label="Grasslands: dominated by herbaceous annuals (<2m)."/>' +
+    '<ColorMapEntry color="#27ff87" quantity="11" label="Permanent Wetlands: permanently inundated lands with 30-60% water cover and >10% vegetated cover."/>' +
+    '<ColorMapEntry color="#c24f44" quantity="12" label="Croplands: at least 60% of area is cultivated cropland."/>' +
+    '<ColorMapEntry color="#a5a5a5" quantity="13" label="Urban and Built-up Lands: at least 30% impervious surface area including building materials, asphalt and vehicles."/>' +
+    '<ColorMapEntry color="#ff6d4c" quantity="14" label="Cropland/Natural Vegetation Mosaics: mosaics of small-scale cultivation 40-60% with natural tree, shrub, or herbaceous vegetation."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="15" label="Permanent Snow and Ice: at least 60% of area is covered by snow and ice for at least 10 months of the year."/>' +
+    '<ColorMapEntry color="#f9ffa4" quantity="16" label="Barren: at least 60% of area is non-vegetated barren (sand, rock, soil) areas with less than 10% vegetation."/>' +
+    '<ColorMapEntry color='#1c0dff' quantity='17' label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' + 
     '<ColorMapEntry color="#ffffff" quantity="254" label="Unclassified"/>' +
   '</ColorMap>' +
 '</RasterSymbolizer>';
@@ -513,30 +528,30 @@ var lc_type1_med = lc_type1.median();
 
 Map.addLayer(lc_type1_med.sldStyle(sld_intervals_lc1), {}, 'type1');
 
-
-var lc_type2 = ee.ImageCollection('MODIS/051/MCD12Q1')
+// this seems to be the new repository:
+var lc_type2 = ee.ImageCollection('MODIS/006/MCD12Q1');
+//var lc_type2 = ee.ImageCollection('MODIS/051/MCD12Q1')
 	.filterDate(start_date, end_date)
-	.select('Land_Cover_Type_2');
+	.select('LC_Type2');
 
 var sld_intervals_lc2 = '<RasterSymbolizer>' +
  '<ColorMap  type="intervals" extended="false" >' +
-    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water"/>' +
-    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen needleleaf forest"/>' +
-    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen broadleaf forest"/>' +
-    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous needleleaf forest"/>' +
-    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous broadleaf forest"/>' +
-    '<ColorMapEntry color="#009900" quantity="5" label="Mixed forest"/>' +
-    '<ColorMapEntry color="#c6b044" quantity="6" label="Closed shrublands"/>' +
-    '<ColorMapEntry color="#dcd159" quantity="7" label="Open shrublands"/>' +
-    '<ColorMapEntry color="#dade48" quantity="8" label="Woody savannas"/>' +
-    '<ColorMapEntry color="#fbff13" quantity="9" label="Savannas"/>' +
-    '<ColorMapEntry color="#b6ff05" quantity="10" label="Grasslands"/>' +
-    '<ColorMapEntry color="#c24f44" quantity="12" label="Croplands"/>' +
-    '<ColorMapEntry color="#a5a5a5" quantity="13" label="Urban and built-up"/>' +
-    '<ColorMapEntry color="#ff6d4c" quantity="14" label="Cropland/natural vegetation mosaic"/>' +
-    '<ColorMapEntry color="#69fff8" quantity="15" label="Snow and ie"/>' +
-    '<ColorMapEntry color="#f9ffa4" quantity="16" label="Barren or sparsely vegetated"/>' +
-    '<ColorMapEntry color="#ffffff" quantity="254" label="Unclassified"/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen Needleleaf Forests: dominated by evergreen conifer trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen Broadleaf Forests: dominated by evergreen broadleaf and palmate trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous Needleleaf Forests: dominated by deciduous needleleaf (larch) trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous Broadleaf Forests: dominated by deciduous broadleaf trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#009900" quantity="5" label="Mixed Forests: dominated by neither deciduous nor evergreen (40-60% of each) tree type (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#c6b044" quantity="6" label="Closed Shrublands: dominated by woody perennials (1-2m height) >60% cover."/>' +
+    '<ColorMapEntry color="#dcd159" quantity="7" label="Open Shrublands: dominated by woody perennials (1-2m height) 10-60% cover."/>' +
+    '<ColorMapEntry color="#dade48" quantity="8" label="Woody Savannas: tree cover 30-60% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#fbff13" quantity="9" label="Savannas: tree cover 10-30% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#b6ff05" quantity="10" label="Grasslands: dominated by herbaceous annuals (<2m)."/>' +
+    '<ColorMapEntry color="#27ff87" quantity="11" label="Permanent Wetlands: permanently inundated lands with 30-60% water cover and >10% vegetated cover."/>' + 
+    '<ColorMapEntry color="#c24f44" quantity="12" label="Croplands: at least 60% of area is cultivated cropland."/>' +
+    '<ColorMapEntry color="#a5a5a5" quantity="13" label="Urban and Built-up Lands: at least 30% impervious surface area including building materials, asphalt and vehicles."/>' +
+    '<ColorMapEntry color="#ff6d4c" quantity="14" label="Cropland/Natural Vegetation Mosaics: mosaics of small-scale cultivation 40-60% with natural tree, shrub, or herbaceous vegetation."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="15" label="Non-Vegetated Lands: at least 60% of area is non-vegetated barren (sand, rock, soil) or permanent snow and ice with less than 10% vegetation."/>'
   '</ColorMap>' +
 '</RasterSymbolizer>';
 
@@ -544,25 +559,25 @@ var lc_type2_med = lc_type2.median();
 
 Map.addLayer(lc_type2_med.sldStyle(sld_intervals_lc2), {}, 'type2');
 
-
-var lc_type3 = ee.ImageCollection('MODIS/051/MCD12Q1')
+// this seems to be the new repository:
+var lc_type3 = ee.ImageCollection('MODIS/006/MCD12Q1');
+//var lc_type3 = ee.ImageCollection('MODIS/051/MCD12Q1')
 	.filterDate(start_date, end_date)
-	.select('Land_Cover_Type_3');
+	.select('LC_Type3');
 
 var sld_intervals_lc3 = '<RasterSymbolizer>' +
  '<ColorMap  type="intervals" extended="false" >' +
-    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water"/>' +
-    '<ColorMapEntry color="#b6ff05" quantity="1" label="Grasses/cereal crops"/>' +
-    '<ColorMapEntry color="#dcd159" quantity="2" label="Shrubs"/>' +
-    '<ColorMapEntry color="#c24f44" quantity="3" label="Broadleaf crops"/>' +
-    '<ColorMapEntry color="#fbff13" quantity="4" label="Savanna"/>' +
-    '<ColorMapEntry color="#086a10" quantity="5" label="Evergreen broadleaf forest"/>' +
-    '<ColorMapEntry color="#78d203" quantity="6" label="Deciduous broadleaf forest"/>' +
-    '<ColorMapEntry color="#05450a" quantity="7" label="Evergreen needleleaf forest"/>' +
-    '<ColorMapEntry color="#54a708" quantity="8" label="Deciduous needleleaf forest"/>' +
-    '<ColorMapEntry color="#f9ffa4" quantity="9" label="Non-vegetated"/>' +
-    '<ColorMapEntry color="#a5a5a5" quantity="10" label="Urban"/>' +
-    '<ColorMapEntry color="#ffffff" quantity="254" label="Unclassified"/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#b6ff05" quantity="1" label="Grasslands: dominated by herbaceous annuals (<2m) including cereal croplands."/>' +
+    '<ColorMapEntry color="#dcd159" quantity="2" label="Shrublands: shrub (1-2m) cover >10%."/>' +
+    '<ColorMapEntry color="#c24f44" quantity="3" label="Broadleaf Croplands: bominated by herbaceous annuals (<2m) that are cultivated with broadleaf crops."/>' +
+    '<ColorMapEntry color="#fbff13" quantity="4" label="Savannas: between 10-60% tree cover (>2m)."/>' +
+    '<ColorMapEntry color="#086a10" quantity="5" label="Evergreen Broadleaf Forests: dominated by evergreen broadleaf and palmate trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#78d203" quantity="6" label="Deciduous Broadleaf Forests: dominated by deciduous broadleaf trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#05450a" quantity="7" label="Evergreen Needleleaf Forests: dominated by evergreen conifer trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#54a708" quantity="8" label="Deciduous Needleleaf Forests: dominated by deciduous needleleaf (larch) trees (canopy >2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#f9ffa4" quantity="9" label="Non-Vegetated Lands: at least 60% of area is non-vegetated barren (sand, rock, soil) or permanent snow and ice with less than 10% vegetation."/>' +
+    '<ColorMapEntry color="#a5a5a5" quantity="10" label="Urban and Built-up Lands: at least 30% impervious surface area including building materials, asphalt and vehicles."/>' +
   '</ColorMap>' +
 '</RasterSymbolizer>';
 
@@ -570,22 +585,23 @@ var lc_type3_med = lc_type3.median();
 
 Map.addLayer(lc_type3_med.sldStyle(sld_intervals_lc3), {}, 'type3');
 
-
-var lc_type4 = ee.ImageCollection('MODIS/051/MCD12Q1')
+// this seems to be the new repository:
+var lc_type4 = ee.ImageCollection('MODIS/006/MCD12Q1');
+//var lc_type4 = ee.ImageCollection('MODIS/051/MCD12Q1')
 	.filterDate(start_date, end_date)
-	.select('Land_Cover_Type_4');
+	.select('LC_Type4');
 
 var sld_intervals_lc4 = '<RasterSymbolizer>' +
  '<ColorMap  type="intervals" extended="false" >' +
-    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water"/>' +
-    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen needleleaf forest"/>' +
-    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen broadleaf forest"/>' +
-    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous needleleaf forest"/>' +
-    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous broadleaf forest"/>' +
-    '<ColorMapEntry color="#009900" quantity="5" label="Annual broadleaf vegetation"/>' +
-    '<ColorMapEntry color="#b6ff05" quantity="6" label="Annual grass vegetation"/>' +
-    '<ColorMapEntry color="#f9ffa4" quantity="7" label="Non-vegetated"/>' +
-    '<ColorMapEntry color="#a5a5a5" quantity="8" label="Urban"/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen Needleleaf Vegetation: dominated by evergreen conifer trees and shrubs (>1m). Woody vegetation cover >10%."/>' +
+    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen Broadleaf Vegetation: dominated by evergreen broadleaf and palmate trees and shrubs (>1m). Woody vegetation cover >10%."/>' +
+    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous Needleleaf Vegetation: dominated by deciduous needleleaf (larch) trees and shrubs (>1m). Woody vegetation cover >10%."/>' +
+    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous Broadleaf Vegetation: dominated by deciduous broadleaf trees and shrubs (>1m). Woody vegetation cover >10%."/>' +
+    '<ColorMapEntry color="#009900" quantity="5" label="Annual Broadleaf Vegetation: dominated by herbaceous annuals (<2m). At least 60% cultivated broadleaf crops."/>' +
+    '<ColorMapEntry color="#b6ff05" quantity="6" label="Annual Grass Vegetation: dominated by herbaceous annuals (<2m) including cereal croplands."/>' +
+    '<ColorMapEntry color="#f9ffa4" quantity="7" label="Non-Vegetated Lands: at least 60% of area is non-vegetated barren (sand, rock, soil) or permanent snow/ice with less than 10% vegetation."/>' +
+    '<ColorMapEntry color="#a5a5a5" quantity="8" label="Urban and Built-up Lands: at least 30% impervious surface area including building materials, asphalt, and vehicles."/>' +
     '<ColorMapEntry color="#ffffff" quantity="254" label="Unclassified"/>' +
   '</ColorMap>' +
 '</RasterSymbolizer>';
@@ -594,10 +610,11 @@ var lc_type4_med = lc_type4.median();
 
 Map.addLayer(lc_type4_med.sldStyle(sld_intervals_lc4), {}, 'type4');
 
-
-var lc_type5 = ee.ImageCollection('MODIS/051/MCD12Q1')
+// this seems to be the new repository:
+var lc_type5 = ee.ImageCollection('MODIS/006/MCD12Q1');
+//var lc_type5 = ee.ImageCollection('MODIS/051/MCD12Q1')
 	.filterDate(start_date, end_date)
-	.select('Land_Cover_Type_5');
+	.select('LC_Type5');
 
 var sld_intervals_lc5 = '<RasterSymbolizer>' +
  '<ColorMap  type="intervals" extended="false" >' +
@@ -620,4 +637,10 @@ var sld_intervals_lc5 = '<RasterSymbolizer>' +
 var lc_type5_med = lc_type5.median();
 
 Map.addLayer(lc_type5_med.sldStyle(sld_intervals_lc5), {}, 'type5');
+
+
+var lc_prop1 = ee.ImageCollection('MODIS/006/MCD12Q1')
+	.filterDate(start_date, end_date)
+	.select('Land_Cover_Type_5');
+
 //////////////////////////////////////////////////////////////////////////////////////////
