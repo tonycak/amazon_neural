@@ -618,18 +618,18 @@ var lc_type5 = ee.ImageCollection('MODIS/006/MCD12Q1');
 
 var sld_intervals_lc5 = '<RasterSymbolizer>' +
  '<ColorMap  type="intervals" extended="false" >' +
-    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water"/>' +
-    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen needleleaf trees"/>' +
-    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen broadleaf trees"/>' +
-    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous needleleaf trees"/>' +
-    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous broadleaf trees"/>' +
-    '<ColorMapEntry color="#dcd159" quantity="5" label="Shrub"/>' +
-    '<ColorMapEntry color="#b6ff05" quantity="6" label="Grasses"/>' +
-    '<ColorMapEntry color="#dade48" quantity="7" label="Cereal crops"/>' +
-    '<ColorMapEntry color="#c24f44" quantity="8" label="Broadleaf crops"/>' +
-    '<ColorMapEntry color="#a5a5a5" quantity="9" label="Urban and built-up"/>' +
-    '<ColorMapEntry color="#69fff8" quantity="10" label="Snow and ie"/>' +
-    '<ColorMapEntry color="#f9ffa4" quantity="11" label="Barren or sparsely vegetated"/>'     
+    '<ColorMapEntry color="#1c0dff" quantity="0" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#05450a" quantity="1" label="Evergreen Needleleaf Trees: dominated by evergreen conifer trees (>2m). Tree cover >10%."/>' +
+    '<ColorMapEntry color="#086a10" quantity="2" label="Evergreen Broadleaf Trees: dominated by evergreen broadleaf and palmate trees (>2m). Tree cover >10%."/>' +
+    '<ColorMapEntry color="#54a708" quantity="3" label="Deciduous Needleleaf Trees: dominated by deciduous needleleaf (larch) trees (>2m). Tree cover >10%."/>' +
+    '<ColorMapEntry color="#78d203" quantity="4" label="Deciduous Broadleaf Trees: dominated by deciduous broadleaf trees (>2m). Tree cover >10%."/>' +
+    '<ColorMapEntry color="#dcd159" quantity="5" label="Shrub: Shrub (1-2m) cover >10%."/>' +
+    '<ColorMapEntry color="#b6ff05" quantity="6" label="Grass: dominated by herbaceous annuals (<2m) that are not cultivated."/>' +
+    '<ColorMapEntry color="#dade48" quantity="7" label="Cereal Croplands: dominated by herbaceous annuals (<2m). At least 60% cultivated cereal crops."/>' +
+    '<ColorMapEntry color="#c24f44" quantity="8" label="Broadleaf Croplands: dominated by herbaceous annuals (<2m). At least 60% cultivated broadleaf crops."/>' +
+    '<ColorMapEntry color="#a5a5a5" quantity="9" label="Urban and Built-up Lands: at least 30% impervious surface area including building materials, asphalt, and vehicles."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="10" label="Permanent Snow and Ice: at least 60% of area is covered by snow and ice for at least 10 months of the year."/>' +
+    '<ColorMapEntry color="#f9ffa4" quantity="11" label="Non-Vegetated Lands: at least 60% of area is non-vegetated barren (sand, rock, soil) with less than 10% vegetation."/>'     
     '<ColorMapEntry color="#ffffff" quantity="254" label="Unclassified"/>' +
   '</ColorMap>' +
 '</RasterSymbolizer>';
@@ -639,8 +639,106 @@ var lc_type5_med = lc_type5.median();
 Map.addLayer(lc_type5_med.sldStyle(sld_intervals_lc5), {}, 'type5');
 
 
-var lc_prop1 = ee.ImageCollection('MODIS/006/MCD12Q1')
+var lc_prop1 = ee.ImageCollection('MODIS/006/MCD12Q1');
 	.filterDate(start_date, end_date)
-	.select('Land_Cover_Type_5');
+	.select('LC_Prop1');
+
+var sld_intervals_lcp1 = '<RasterSymbolizer>' +
+ '<ColorMap  type="intervals" extended="false" >' +
+    '<ColorMapEntry color="#f9ffa4" quantity="1" label="Barren: at least of area 60% is non-vegetated barren (sand, rock, soil) or permanent snow/ice with less than 10% vegetation."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="2" label="Permanent Snow and Ice: at least 60% of area is covered by snow and ice for at least 10 months of the year."/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="3" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#05450a" quantity="11" label="Evergreen Needleleaf Forests: dominated by evergreen conifer trees (>2m). Tree cover >60%."/>' +   
+    '<ColorMapEntry color="#086a10" quantity="12" label="Evergreen Broadleaf Forests: dominated by evergreen broadleaf and palmate trees (>2m). Tree cover >60%."/>' +    
+    '<ColorMapEntry color="#54a708" quantity="13" label="Deciduous Needleleaf Forests: dominated by deciduous needleleaf (larch) trees (>2m). Tree cover >60%."/>' +    
+    '<ColorMapEntry color="#78d203" quantity="14" label="Deciduous Broadleaf Forests: dominated by deciduous broadleaf trees (>2m). Tree cover >60%."/>' +
+    '<ColorMapEntry color="#005a00" quantity="15" label="Mixed Broadleaf/Needleleaf Forests: co-dominated (40-60%) by broadleaf deciduous and evergreen needleleaf tree (>2m) types. Tree cover >60%."/>' +
+    '<ColorMapEntry color="#009900" quantity="16" label="Mixed Broadleaf Evergreen/Deciduous Forests: co-dominated (40-60%) by broadleaf evergreen and deciduous tree (>2m) types. Tree cover >60%."/>' +
+    '<ColorMapEntry color="#006c00" quantity="21" label="Open Forests: tree cover 30-60% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#00d000" quantity="22" label="Sparse Forests: tree cover 10-30% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#b6ff05" quantity="31" label="Dense Herbaceous: dominated by herbaceous annuals (<2m) at least 60% cover."/>' +
+    '<ColorMapEntry color="#98d604" quantity="32" label="Sparse Herbaceous: dominated by herbaceous annuals (<2m) 10-60% cover."/>' +
+    '<ColorMapEntry color="#dcd159" quantity="41" label="Dense Shrublands: dominated by woody perennials (1-2m) >60% cover."/>' +
+    '<ColorMapEntry color="#f1fb58" quantity="42" label="Shrubland/Grassland Mosaics: dominated by woody perennials (1-2m) 10-60% cover with dense herbaceous annual understory."/>' +
+    '<ColorMapEntry color="#fbee65" quantity="43" label="Sparse Shrublands: dominated by woody perennials (1-2m) 10-60% cover with minimal herbaceous understory."/>' +
+  '</ColorMap>' +
+'</RasterSymbolizer>';
+
+var lc_prop1_med = lc_prop1.median();
+
+Map.addLayer(lc_prop1_med.sldStyle(sld_intervals_lcp1), {}, 'prop1');
+
+
+var lc_prop2 = ee.ImageCollection('MODIS/006/MCD12Q1');
+	.filterDate(start_date, end_date)
+	.select('LC_Prop2');
+
+var sld_intervals_lcp2 = '<RasterSymbolizer>' +
+ '<ColorMap  type="intervals" extended="false" >' +
+    '<ColorMapEntry color="#f9ffa4" quantity="1" label="Barren: at least of area 60% is non-vegetated barren (sand, rock, soil) or permanent snow/ice with less than 10% vegetation."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="2" label="Permanent Snow and Ice: at least 60% of area is covered by snow and ice for at least 10 months of the year."/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="3" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#a5a5a5" quantity="9" label="Urban and Built-up Lands: at least 30% of area is made up ofimpervious surfaces including building materials, asphalt, and vehicles."/>' +
+    '<ColorMapEntry color="#003f00" quantity="10" label="Dense Forests: tree cover >60% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#006c00" quantity="20" label="Open Forests: tree cover 10-60% (canopy >2m)."/>' + 
+    '<ColorMapEntry color="#e3ff77" quantity="25" label="Forest/Cropland Mosaics: mosaics of small-scale cultivation 40-60% with >10% natural tree cover."/>' + 
+    '<ColorMapEntry color="#b6ff05" quantity="30" label="Natural Herbaceous: dominated by herbaceous annuals (<2m). At least 10% cover."/>' + 
+    '<ColorMapEntry color="#93ce04" quantity="35" label="Natural Herbaceous/Croplands Mosaics: mosaics of small-scale cultivation 40-60% with natural shrub or herbaceous vegetation."/>' +
+    '<ColorMapEntry color="#77a703" quantity="36" label="Herbaceous Croplands: dominated by herbaceous annuals (<2m). At least 60% cover. Cultivated fraction >60%."/>' +
+    '<ColorMapEntry color="#dcd159" quantity="40" label="Shrublands: shrub cover >60% (1-2m)."/>' +
+  '</ColorMap>' +
+'</RasterSymbolizer>';
+
+var lc_prop2_med = lc_prop2.median();
+
+Map.addLayer(lc_prop2_med.sldStyle(sld_intervals_lcp2), {}, 'prop2');
+
+
+var lc_prop3 = ee.ImageCollection('MODIS/006/MCD12Q1');
+	.filterDate(start_date, end_date)
+	.select('LC_Prop3');
+
+var sld_intervals_lcp3 = '<RasterSymbolizer>' +
+ '<ColorMap  type="intervals" extended="false" >' +
+    '<ColorMapEntry color="#f9ffa4" quantity="1" label="Barren: at least of area 60% is non-vegetated barren (sand, rock, soil) or permanent snow/ice with less than 10% vegetation."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="2" label="Permanent Snow and Ice: at least 60% of area is covered by snow and ice for at least 10 months of the year."/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="3" label="Water Bodies: at least 60% of area is covered by permanent water bodies."/>' +
+    '<ColorMapEntry color="#003f00" quantity="10" label="Dense Forests: tree cover >60% (canopy >2m)."/>' +
+    '<ColorMapEntry color="#006c00" quantity="20" label="Open Forests: tree cover 10-60% (canopy >2m)."/>' + 
+    '<ColorMapEntry color="#72834a" quantity="27" label="Woody Wetlands: shrub and tree cover >10% (>1m). Permanently or seasonally inundated."/>' + 
+    '<ColorMapEntry color="#b6ff05" quantity="30" label="Grasslands: dominated by herbaceous annuals (<2m) >10% cover."/>' + 
+    '<ColorMapEntry color="#dcd159" quantity="40" label="Shrublands: shrub cover >60% (1-2m)."/>' +
+    '<ColorMapEntry color="#3aba73" quantity="50" label="Herbaceous Wetlands: dominated by herbaceous annuals (<2m) >10% cover. Permanently or seasonally inundated."/>' +
+    '<ColorMapEntry color="#1e9db3" quantity="51" label="Tundra: tree cover <10%. Snow-covered for at least 8 months of the year."/>' +
+  '</ColorMap>' +
+'</RasterSymbolizer>';
+
+var lc_prop3_med = lc_prop3.median();
+
+Map.addLayer(lc_prop3_med.sldStyle(sld_intervals_lcp3), {}, 'prop3');
+
+
+var lc_qc = ee.ImageCollection('MODIS/006/MCD12Q1');
+	.filterDate(start_date, end_date)
+	.select('WC');
+
+var sld_intervals_lcqc = '<RasterSymbolizer>' +
+ '<ColorMap  type="intervals" extended="false" >' +
+    '<ColorMapEntry color="#f9ffa4" quantity="0" label="Classified land: has a classification label and is land according to the water mask."/>' +
+    '<ColorMapEntry color="#69fff8" quantity="1" label="Unclassified land: not classified because of missing data but land according to the water mask, labeled as barren."/>' +
+    '<ColorMapEntry color="#1c0dff" quantity="2" label="Classified water: has a classification label and is water according to the water mask."/>' +
+    '<ColorMapEntry color="#003f00" quantity="3" label="Unclassified water: not classified because of missing data but water according to the water mask."/>' +
+    '<ColorMapEntry color="#006c00" quantity="4" label="Classified sea ice: classified as snow/ice but water mask says it is water and less than 100m elevation, switched to water."/>' + 
+    '<ColorMapEntry color="#72834a" quantity="5" label="Misclassified water: classified as water but water mask says it is land, switched to secondary label."/>' + 
+    '<ColorMapEntry color="#b6ff05" quantity="6" label="Omitted snow/ice: land according to the water mask that was classified as something other than snow but with a maximum annual temperature below 1◦C, relabeled as snow/ice."/>' + 
+    '<ColorMapEntry color="#dcd159" quantity="7" label="Misclassified snow/ice: land according to the water mask that was classified as snow but with a minimum annual temperature greater than 1◦C, relabeled as barren."/>' +
+    '<ColorMapEntry color="#3aba73" quantity="8" label="Backfilled label: missing label from stabilization, filled with the pre-stabilized result."/>' +
+    '<ColorMapEntry color="#1e9db3" quantity="9" label="Forest type changed: climate-based change to forest class."/>' +
+  '</ColorMap>' +
+'</RasterSymbolizer>';
+
+var lc_qc_med = lc_qc.median();
+
+Map.addLayer(lc_qc_med.sldStyle(sld_intervals_lcqc), {}, 'qc');
 
 //////////////////////////////////////////////////////////////////////////////////////////
